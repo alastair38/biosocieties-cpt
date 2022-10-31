@@ -275,7 +275,7 @@ function my_pre_get_posts( $query ) {
 	
 
 	// only modify queries for 'event' post type
-	if( isset($query->query_vars['post_type']) && $query->query_vars['post_type'] == 'articles_and_reviews' ) {
+	if( isset($query->query_vars['post_type']) && $query->query_vars['post_type'] == 'articles-and-reviews' ) {
 			
 			$query->set('orderby', 'meta_value');    
 			$query->set('meta_key', 'featured_article');    
