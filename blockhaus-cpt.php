@@ -65,7 +65,7 @@ function create_articles_reviews_cpt() {
 		'capability_type' => 'post',
 		'rewrite' => $rewrite,
 	);
-	register_post_type( 'articles_and_reviews', $args );
+	register_post_type( 'articles-and-reviews', $args );
 
 }
 add_action( 'init', 'create_articles_reviews_cpt', 0 );
