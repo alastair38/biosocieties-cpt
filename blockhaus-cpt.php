@@ -106,7 +106,7 @@ function create_articles_and_reviews_featured_tax() {
 		'show_in_rest' => true,
 		'rewrite' => $rewrite,
 	);
-	register_taxonomy( 'articles_and_reviews_featured', array('articles_and_reviews'), $args );
+	register_taxonomy( 'articles_and_reviews_featured', array('articles-and-reviews'), $args );
 
 }
 add_action( 'init', 'create_articles_and_reviews_featured_tax' );
