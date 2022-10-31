@@ -47,7 +47,7 @@ function create_articles_reviews_cpt() {
 		'label' => __( 'Articles and Review', 'blockhaus' ),
 		'description' => __( '', 'blockhaus' ),
 		'labels' => $labels,
-		'menu_icon' => 'data:image/svg+xml;base64,' . base64_encode(file_get_contents( plugin_dir_path( __FILE__ ) . 'assets/text.svg' )),
+		'menu_icon' => 'dashicons-media-document',
 		'supports' => array('title', 'editor', 'excerpt', 'thumbnail', 'author'),
 		'taxonomies' => array(),
 		'public' => true,
@@ -61,48 +61,39 @@ function create_articles_reviews_cpt() {
 		'hierarchical' => false,
 		'exclude_from_search' => false,
 		'show_in_rest' => true,
-    'template'              => array(
-      array(
-          'core/pattern',
-          array(
-              'slug' => 'blockhaus/blockhaus-quote-with-image',
-          ),
-      ),
-  ),
-  
 		'publicly_queryable' => true,
 		'capability_type' => 'post',
 		'rewrite' => $rewrite,
 	);
-	register_post_type( 'articles-and-reviews', $args );
+	register_post_type( 'articles_and_reviews', $args );
 
 }
 add_action( 'init', 'create_articles_reviews_cpt', 0 );
 
 // Register Taxonomy Publication Theme
-function create_publication_theme_tax() {
+function create_articles_and_reviews_featured_tax() {
 
 	$labels = array(
-		'name'              => _x( 'Publication Themes', 'taxonomy general name', 'blockhaus' ),
-		'singular_name'     => _x( 'Publication Theme', 'taxonomy singular name', 'blockhaus' ),
-		'search_items'      => __( 'Search Publication Themes', 'blockhaus' ),
-		'all_items'         => __( 'All Publication Themes', 'blockhaus' ),
-		'parent_item'       => __( 'Parent Publication Theme', 'blockhaus' ),
-		'parent_item_colon' => __( 'Parent Publication Theme:', 'blockhaus' ),
-		'edit_item'         => __( 'Edit Publication Theme', 'blockhaus' ),
-		'update_item'       => __( 'Update Publication Theme', 'blockhaus' ),
-		'add_new_item'      => __( 'Add New Publication Theme', 'blockhaus' ),
-		'new_item_name'     => __( 'New Publication Theme Name', 'blockhaus' ),
-		'menu_name'         => __( 'Publication Theme', 'blockhaus' ),
+		'name'              => _x( 'Categories', 'taxonomy general name', 'blockhaus' ),
+		'singular_name'     => _x( 'Category', 'taxonomy singular name', 'blockhaus' ),
+		'search_items'      => __( 'Search Categories', 'blockhaus' ),
+		'all_items'         => __( 'All Categories', 'blockhaus' ),
+		'parent_item'       => __( 'Parent Category', 'blockhaus' ),
+		'parent_item_colon' => __( 'Parent Category:', 'blockhaus' ),
+		'edit_item'         => __( 'Edit Category', 'blockhaus' ),
+		'update_item'       => __( 'Update Category', 'blockhaus' ),
+		'add_new_item'      => __( 'Add New Category', 'blockhaus' ),
+		'new_item_name'     => __( 'New Category Name', 'blockhaus' ),
+		'menu_name'         => __( 'Categories', 'blockhaus' ),
 	);
 	$rewrite = array(
-		'slug' => 'theme',
+		'slug' => 'articles-and-reviews/featured',
 		'with_front' => true,
 		'hierarchical' => false,
 	);
 	$args = array(
 		'labels' => $labels,
-		'description' => __( 'Taxonomy for the Publication custom post type', 'blockhaus' ),
+		'description' => __( 'Taxonomy for the Articles and Reviews custom post type', 'blockhaus' ),
 		'hierarchical' => true,
 		'public' => true,
 		'publicly_queryable' => true,
@@ -115,55 +106,57 @@ function create_publication_theme_tax() {
 		'show_in_rest' => true,
 		'rewrite' => $rewrite,
 	);
-	register_taxonomy( 'publication_theme', array('publication'), $args );
+	register_taxonomy( 'articles_and_reviews_featured', array('articles_and_reviews'), $args );
 
 }
-add_action( 'init', 'create_publication_theme_tax' );
+add_action( 'init', 'create_articles_and_reviews_featured_tax' );
 
 
-// Register Custom Post Type Project
-function create_project_cpt() {
+
+
+// Register Custom Post Type Videos
+function create_video_cpt() {
 
 	$labels = array(
-		'name' => _x( 'Projects', 'Post Theme General Name', 'blockhaus' ),
-		'singular_name' => _x( 'Project', 'Post Theme Singular Name', 'blockhaus' ),
-		'menu_name' => _x( 'Projects', 'Admin Menu text', 'blockhaus' ),
-		'name_admin_bar' => _x( 'Project', 'Add New on Toolbar', 'blockhaus' ),
-		'archives' => __( 'Project Archives', 'blockhaus' ),
-		'attributes' => __( 'Project Attributes', 'blockhaus' ),
-		'parent_item_colon' => __( 'Parent Project:', 'blockhaus' ),
-		'all_items' => __( 'All Projects', 'blockhaus' ),
-		'add_new_item' => __( 'Add New Project', 'blockhaus' ),
+		'name' => _x( 'Videos', 'Post Theme General Name', 'blockhaus' ),
+		'singular_name' => _x( 'Video', 'Post Theme Singular Name', 'blockhaus' ),
+		'menu_name' => _x( 'Videos', 'Admin Menu text', 'blockhaus' ),
+		'name_admin_bar' => _x( 'Video', 'Add New on Toolbar', 'blockhaus' ),
+		'archives' => __( 'Video Archives', 'blockhaus' ),
+		'attributes' => __( 'Video Attributes', 'blockhaus' ),
+		'parent_item_colon' => __( 'Parent Video:', 'blockhaus' ),
+		'all_items' => __( 'All Videos', 'blockhaus' ),
+		'add_new_item' => __( 'Add New Video', 'blockhaus' ),
 		'add_new' => __( 'Add New', 'blockhaus' ),
-		'new_item' => __( 'New Project', 'blockhaus' ),
-		'edit_item' => __( 'Edit Project', 'blockhaus' ),
-		'update_item' => __( 'Update Project', 'blockhaus' ),
-		'view_item' => __( 'View Project', 'blockhaus' ),
-		'view_items' => __( 'View Projects', 'blockhaus' ),
-		'search_items' => __( 'Search Project', 'blockhaus' ),
+		'new_item' => __( 'New Video', 'blockhaus' ),
+		'edit_item' => __( 'Edit Video', 'blockhaus' ),
+		'update_item' => __( 'Update Video', 'blockhaus' ),
+		'view_item' => __( 'View Video', 'blockhaus' ),
+		'view_items' => __( 'View Videos', 'blockhaus' ),
+		'search_items' => __( 'Search Video', 'blockhaus' ),
 		'not_found' => __( 'Not found', 'blockhaus' ),
 		'not_found_in_trash' => __( 'Not found in Trash', 'blockhaus' ),
 		'featured_image' => __( 'Featured Image', 'blockhaus' ),
 		'set_featured_image' => __( 'Set featured image', 'blockhaus' ),
 		'remove_featured_image' => __( 'Remove featured image', 'blockhaus' ),
 		'use_featured_image' => __( 'Use as featured image', 'blockhaus' ),
-		'insert_into_item' => __( 'Insert into Project', 'blockhaus' ),
-		'uploaded_to_this_item' => __( 'Uploaded to this Project', 'blockhaus' ),
-		'items_list' => __( 'Projects list', 'blockhaus' ),
-		'items_list_navigation' => __( 'Projects list navigation', 'blockhaus' ),
-		'filter_items_list' => __( 'Filter Projects list', 'blockhaus' ),
+		'insert_into_item' => __( 'Insert into Video', 'blockhaus' ),
+		'uploaded_to_this_item' => __( 'Uploaded to this Video', 'blockhaus' ),
+		'items_list' => __( 'Videos list', 'blockhaus' ),
+		'items_list_navigation' => __( 'Videos list navigation', 'blockhaus' ),
+		'filter_items_list' => __( 'Filter Videos list', 'blockhaus' ),
 	);
 	$rewrite = array(
-		'slug' => 'projects',
+		'slug' => 'videos',
 		'with_front' => true,
 		'pages' => true,
 		'feeds' => true,
 	);
 	$args = array(
-		'label' => __( 'Project', 'blockhaus' ),
+		'label' => __( 'Video', 'blockhaus' ),
 		'description' => __( '', 'blockhaus' ),
 		'labels' => $labels,
-		'menu_icon' => 'dashicons-media-document',
+		'menu_icon' => 'dashicons-format-video',
 		'supports' => array('title', 'editor', 'excerpt', 'thumbnail', 'author'),
 		'taxonomies' => array(),
 		'public' => true,
@@ -190,10 +183,10 @@ function create_project_cpt() {
 		'capability_type' => 'post',
 		'rewrite' => $rewrite,
 	);
-	register_post_type( 'project', $args );
+	register_post_type( 'video', $args );
 
 }
-add_action( 'init', 'create_project_cpt', 0 );
+add_action( 'init', 'create_video_cpt', 0 );
 
 // Register Custom Post Type Journal Editions
 
@@ -269,6 +262,35 @@ function create_journal_editions_cpt() {
 
 }
 add_action( 'init', 'create_journal_editions_cpt', 0 );
+
+
+function my_pre_get_posts( $query ) {
+    
+	// do not modify queries in the admin
+	if( is_admin() ) {
+			
+			return $query;
+			
+	}
+	
+
+	// only modify queries for 'event' post type
+	if( isset($query->query_vars['post_type']) && $query->query_vars['post_type'] == 'articles_and_reviews' ) {
+			
+			$query->set('orderby', 'meta_value');    
+			$query->set('meta_key', 'featured_article');    
+			$query->set('order', 'DESC'); 
+			
+			
+	}
+	
+
+	// return
+	return $query;
+
+}
+
+add_action('pre_get_posts', 'my_pre_get_posts');
 // Modify excerpt for publications archive
 
 // function blockhaus_modify_publication_excerpt() {
