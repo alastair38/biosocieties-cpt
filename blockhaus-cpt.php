@@ -39,7 +39,7 @@ function create_articles_reviews_cpt() {
 	);
 	$rewrite = array(
 		'slug' => 'articles-and-reviews',
-		'with_front' => true,
+		'with_front' => false,
 		'pages' => true,
 		'feeds' => true,
 	);
@@ -87,8 +87,8 @@ function create_articles_and_reviews_featured_tax() {
 		'menu_name'         => __( 'Categories', 'blockhaus' ),
 	);
 	$rewrite = array(
-		'slug' => 'type',
-		'with_front' => true,
+		'slug' => 'articles-and-reviews/type',
+		'with_front' => false,
 		'hierarchical' => false,
 	);
 	$args = array(
