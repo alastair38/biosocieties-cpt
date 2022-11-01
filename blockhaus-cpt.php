@@ -5,6 +5,47 @@ Description: Custom post types for this website. Deactivating this plugin will d
 Text Domain: blockhaus
 */
 
+// Register Taxonomy Publication Theme
+function create_articles_and_reviews_featured_tax() {
+
+	$labels = array(
+		'name'              => _x( 'Categories', 'taxonomy general name', 'blockhaus' ),
+		'singular_name'     => _x( 'Category', 'taxonomy singular name', 'blockhaus' ),
+		'search_items'      => __( 'Search Categories', 'blockhaus' ),
+		'all_items'         => __( 'All Categories', 'blockhaus' ),
+		'parent_item'       => __( 'Parent Category', 'blockhaus' ),
+		'parent_item_colon' => __( 'Parent Category:', 'blockhaus' ),
+		'edit_item'         => __( 'Edit Category', 'blockhaus' ),
+		'update_item'       => __( 'Update Category', 'blockhaus' ),
+		'add_new_item'      => __( 'Add New Category', 'blockhaus' ),
+		'new_item_name'     => __( 'New Category Name', 'blockhaus' ),
+		'menu_name'         => __( 'Categories', 'blockhaus' ),
+	);
+	$rewrite = array(
+		'slug' => 'articles-and-reviews/type',
+		'with_front' => true,
+		'hierarchical' => false,
+	);
+	$args = array(
+		'labels' => $labels,
+		'description' => __( 'Taxonomy for the Articles and Reviews custom post type', 'blockhaus' ),
+		'hierarchical' => true,
+		'public' => true,
+		'publicly_queryable' => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'show_in_nav_menus' => true,
+		'show_tagcloud' => false,
+		'show_in_quick_edit' => true,
+		'show_admin_column' => true,
+		'show_in_rest' => true,
+		'rewrite' => $rewrite,
+	);
+	register_taxonomy( 'articles_and_reviews_featured', array('articles-and-reviews'), $args );
+
+}
+add_action( 'init', 'create_articles_and_reviews_featured_tax' );
+
 // Register Custom Post Type Articles / Reviews
 function create_articles_reviews_cpt() {
 
@@ -70,46 +111,6 @@ function create_articles_reviews_cpt() {
 }
 add_action( 'init', 'create_articles_reviews_cpt', 0 );
 
-// Register Taxonomy Publication Theme
-function create_articles_and_reviews_featured_tax() {
-
-	$labels = array(
-		'name'              => _x( 'Categories', 'taxonomy general name', 'blockhaus' ),
-		'singular_name'     => _x( 'Category', 'taxonomy singular name', 'blockhaus' ),
-		'search_items'      => __( 'Search Categories', 'blockhaus' ),
-		'all_items'         => __( 'All Categories', 'blockhaus' ),
-		'parent_item'       => __( 'Parent Category', 'blockhaus' ),
-		'parent_item_colon' => __( 'Parent Category:', 'blockhaus' ),
-		'edit_item'         => __( 'Edit Category', 'blockhaus' ),
-		'update_item'       => __( 'Update Category', 'blockhaus' ),
-		'add_new_item'      => __( 'Add New Category', 'blockhaus' ),
-		'new_item_name'     => __( 'New Category Name', 'blockhaus' ),
-		'menu_name'         => __( 'Categories', 'blockhaus' ),
-	);
-	$rewrite = array(
-		'slug' => 'articles-and-reviews/type',
-		'with_front' => true,
-		'hierarchical' => false,
-	);
-	$args = array(
-		'labels' => $labels,
-		'description' => __( 'Taxonomy for the Articles and Reviews custom post type', 'blockhaus' ),
-		'hierarchical' => true,
-		'public' => true,
-		'publicly_queryable' => true,
-		'show_ui' => true,
-		'show_in_menu' => true,
-		'show_in_nav_menus' => true,
-		'show_tagcloud' => false,
-		'show_in_quick_edit' => true,
-		'show_admin_column' => true,
-		'show_in_rest' => true,
-		'rewrite' => $rewrite,
-	);
-	register_taxonomy( 'articles_and_reviews_featured', array('articles-and-reviews'), $args );
-
-}
-add_action( 'init', 'create_articles_and_reviews_featured_tax' );
 
 
 
