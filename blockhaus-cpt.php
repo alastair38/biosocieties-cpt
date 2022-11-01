@@ -87,7 +87,7 @@ function create_articles_and_reviews_featured_tax() {
 		'menu_name'         => __( 'Categories', 'blockhaus' ),
 	);
 	$rewrite = array(
-		'slug' => 'articles-and-reviews/featured',
+		'slug' => 'type',
 		'with_front' => true,
 		'hierarchical' => false,
 	);
