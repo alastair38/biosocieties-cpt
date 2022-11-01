@@ -88,7 +88,7 @@ function create_articles_and_reviews_featured_tax() {
 	);
 	$rewrite = array(
 		'slug' => 'articles-and-reviews/type',
-		'with_front' => false,
+		'with_front' => true,
 		'hierarchical' => false,
 	);
 	$args = array(
