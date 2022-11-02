@@ -6,7 +6,7 @@ Text Domain: blockhaus
 */
 
 // Register Taxonomy Publication Theme
-function create_articles_and_reviews_featured_tax() {
+function create_articles_and_reviews_tax() {
 
 	$labels = array(
 		'name'              => _x( 'Categories', 'taxonomy general name', 'blockhaus' ),
@@ -22,7 +22,7 @@ function create_articles_and_reviews_featured_tax() {
 		'menu_name'         => __( 'Categories', 'blockhaus' ),
 	);
 	$rewrite = array(
-		'slug' => 'articles-and-reviews/type',
+		'slug' => 'articles-and-reviews',
 		'with_front' => true,
 		'hierarchical' => false,
 	);
@@ -41,10 +41,10 @@ function create_articles_and_reviews_featured_tax() {
 		'show_in_rest' => true,
 		'rewrite' => $rewrite,
 	);
-	register_taxonomy( 'articles_and_reviews_featured', array('articles-and-reviews'), $args );
+	register_taxonomy( 'articles_and_reviews_tax', array('articles-and-reviews'), $args );
 
 }
-add_action( 'init', 'create_articles_and_reviews_featured_tax' );
+add_action( 'init', 'create_articles_and_reviews_tax' );
 
 // Register Custom Post Type Articles / Reviews
 function create_articles_reviews_cpt() {
@@ -79,8 +79,8 @@ function create_articles_reviews_cpt() {
 		'filter_items_list' => __( 'Filter Articles and Reviews list', 'blockhaus' ),
 	);
 	$rewrite = array(
-		'slug' => 'articles-and-reviews',
-		'with_front' => false,
+		'slug' => 'articles-and-reviews/%articles_and_reviews_tax%',
+		'with_front' => true,
 		'pages' => true,
 		'feeds' => true,
 	);
@@ -98,7 +98,7 @@ function create_articles_reviews_cpt() {
 		'show_in_admin_bar' => true,
 		'show_in_nav_menus' => true,
 		'can_export' => true,
-		'has_archive' => true,
+		'has_archive' => 'articles-and-reviews',
 		'hierarchical' => false,
 		'exclude_from_search' => false,
 		'show_in_rest' => true,
@@ -112,7 +112,22 @@ function create_articles_reviews_cpt() {
 add_action( 'init', 'create_articles_reviews_cpt', 0 );
 
 
-
+add_filter('post_type_link', 'blockhaus_update_permalink_structure', 10, 2);
+function blockhaus_update_permalink_structure( $post_link, $post )
+{
+    if ( false !== strpos( $post_link, '%articles_and_reviews_tax%' ) ) {
+        $taxonomy_terms = get_the_terms( $post->ID, 'articles_and_reviews_tax' ); 
+				if(is_array($taxonomy_terms)) {
+					foreach ( $taxonomy_terms as $term ) { 
+						if ( ! $term->parent ) {
+							$post_link = str_replace( '%articles_and_reviews_tax%', $term->slug, $post_link );
+						}
+					} 
+				}
+      
+    }
+    return $post_link;
+}
 
 
 // Register Custom Post Type Videos
@@ -292,6 +307,16 @@ function my_pre_get_posts( $query ) {
 }
 
 add_action('pre_get_posts', 'my_pre_get_posts');
+
+
+// function change_tax_slug($args, $taxonomy) {
+// 	if($taxonomy === 'articles_and_reviews_tax') {
+// 		$args['rewrite']['slug'] = 'articles-and-reviews/type';
+// 	}
+// 	return $args;
+// }
+
+// add_filter('register_taxonomy_args', 'change_tax_slug', 10, 2);
 // Modify excerpt for publications archive
 
 // function blockhaus_modify_publication_excerpt() {
