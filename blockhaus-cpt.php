@@ -115,7 +115,7 @@ add_action( 'init', 'create_articles_reviews_cpt', 0 );
 add_filter('post_type_link', 'blockhaus_update_permalink_structure', 10, 2);
 function blockhaus_update_permalink_structure( $post_link, $post )
 {
-    if ( false !== strpos( $post_link, '%articles_and_reviews_tax%' ) ) {
+   if ( false !== strpos( $post_link, '%articles_and_reviews_tax%' ) ) {
         $taxonomy_terms = get_the_terms( $post->ID, 'articles_and_reviews_tax' ); 
 				if(is_array($taxonomy_terms)) {
 					foreach ( $taxonomy_terms as $term ) { 
@@ -123,6 +123,8 @@ function blockhaus_update_permalink_structure( $post_link, $post )
 							$post_link = str_replace( '%articles_and_reviews_tax%', $term->slug, $post_link );
 						}
 					} 
+				} else {
+					$post_link = str_replace( '%articles_and_reviews_tax%', 'uncategorised', $post_link );
 				}
       
     }
