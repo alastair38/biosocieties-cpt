@@ -263,15 +263,6 @@ function create_journal_editions_cpt() {
 		'hierarchical' => false,
 		'exclude_from_search' => false,
 		'show_in_rest' => true,
-    'template'              => array(
-      array(
-          'core/pattern',
-          array(
-              'slug' => 'blockhaus/blockhaus-quote-with-image',
-          ),
-      ),
-  ),
-  
 		'publicly_queryable' => true,
 		'capability_type' => 'post',
 		'rewrite' => $rewrite,
