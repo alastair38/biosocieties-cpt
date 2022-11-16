@@ -89,7 +89,7 @@ function create_articles_reviews_cpt() {
 		'description' => __( '', 'blockhaus' ),
 		'labels' => $labels,
 		'menu_icon' => 'dashicons-media-document',
-		'supports' => array('title', 'editor', 'excerpt', 'thumbnail', 'author'),
+		'supports' => array('title', 'editor', 'excerpt', 'thumbnail', 'author', 'sticky'),
 		'taxonomies' => array(),
 		'public' => true,
 		'show_ui' => true,
@@ -301,7 +301,30 @@ function my_pre_get_posts( $query ) {
 
 add_action('pre_get_posts', 'my_pre_get_posts');
 
+/**
+ *	ACF Admin Columns
+ *
+ */
 
+function my_page_columns($columns) {
+	$columns = array(
+	 'cb' => '< input type="checkbox" />',
+	 'title' => 'Title',
+	 'featured_article' => 'Featured',
+	 'date' => 'Date',
+	);
+	return $columns;
+ }
+ function my_custom_columns($column) {
+	global $post;
+	if($column == 'featured_article') {
+	 echo '<span data-featured="' . get_field('featured_article', $post->ID) . '">' . get_field('featured_article', $post->ID) . '</span>';
+	} else {
+	 echo '';
+	}
+ }
+ add_action("manage_articles-and-reviews_posts_custom_column", "my_custom_columns");
+ add_filter("manage_edit-articles-and-reviews_columns", "my_page_columns");
 // function change_tax_slug($args, $taxonomy) {
 // 	if($taxonomy === 'articles_and_reviews_tax') {
 // 		$args['rewrite']['slug'] = 'articles-and-reviews/type';
